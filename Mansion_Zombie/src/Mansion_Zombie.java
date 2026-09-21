@@ -1,4 +1,4 @@
-public class Atributos_Mansion_Zombi {
+public class Mansion_Zombie {
 
     private int numZombies;
     private int numHabitacion;
@@ -6,7 +6,7 @@ public class Atributos_Mansion_Zombi {
     private int Armas;
     private int Proteccioes;
 
-    public Atributos_Mansion_Zombi(int numZombies, int numHabitacion, int puntosVida, int Armas, int Protecciones) {
+    public Mansion_Zombie(int numZombies, int numHabitacion, int puntosVida, int Armas, int Protecciones) {
         this.numZombies = numZombies;
         this.numHabitacion = numHabitacion;
         this.puntosVida = puntosVida;
