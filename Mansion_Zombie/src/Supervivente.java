@@ -2,7 +2,7 @@ import java.util.*;
 public class Supervivente {
     public static void main(String[] args) {
         Supervivente s = new Supervivente();
-        System.out.println(">El superviviente ataca con valor " + s.numero_Aleatorio());
+        System.out.println(">El superviviente ataca con valor " + s.numero_Atque());
     }
     private int vida_Actual;
     private int vida_Maxima;
@@ -68,7 +68,7 @@ public class Supervivente {
         this.cantidad_Protecciones = cantidad_Protecciones;
     }
 
-    public int numero_Aleatorio() {
+    public int numero_Atque() {
         int tira_Dado = (int)(Math.random() * this.puntos_Ataque) + 1;
         return tira_Dado;
     }
