@@ -1,13 +1,11 @@
 public class Dado {
-    public static  void main(String[] args) {
-        int numeroAleatorio = numeroAleatorio();
 
-        System.out.println(numeroAleatorio);
+    public static int lanzar(int maximo) { //Numero aleatorio entre 1 y maximo incluido
+        if (maximo <= 0) return 1;
+        return (int) (Math.random() * maximo) + 1;
     }
 
-    public static int numeroAleatorio() {
-        int numero_Aleatorio = (int)(Math.random() * 2);
-
-        return numero_Aleatorio;
+    public static int aleatorioCeroA(int limiteExclusivo) { //Numero aleatorio entre 0 y 1
+        return (int) (Math.random() * limiteExclusivo);
     }
 }

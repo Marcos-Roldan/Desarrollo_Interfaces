@@ -1,35 +1,34 @@
 public class Zombie {
-    public static void main(String[] args) {
-        Zombie z = new Zombie();
-        System.out.println(">El zombie ataca con valor " + z.numero_Ataque());
-    }
 
-    private int vida_Actual;
-    private int puntos_Ataque;
+    private int vidaActual;
+    private int puntosAtaque;
 
-    public Zombie() {
-        this.vida_Actual = vida_Actual;
-        this.puntos_Ataque = 4;
+    public Zombie(int numeroHabitacion) {
+        int base = Dado.aleatorioCeroA(2) + 2 + (numeroHabitacion - 1);
+        this.vidaActual = base;
+        this.puntosAtaque = base;
     }
 
     public int getVida_Actual() {
-        return vida_Actual;
+        return vidaActual;
     }
 
     public int getPuntos_Ataque() {
-        return puntos_Ataque;
+        return puntosAtaque;
     }
 
-    public void setVida_Actual(int vida_Actual) {
-        this.vida_Actual = vida_Actual;
+    public boolean estaVivo() {
+        return vidaActual > 0;
     }
 
-    public void setPuntos_Ataque(int puntos_Ataque) {
-        this.puntos_Ataque = puntos_Ataque;
+    public int atacar() {
+        return Dado.lanzar(puntosAtaque);
     }
 
-    public int numero_Ataque() {
-        int tira_Dado = (int)(Math.random() * this.puntos_Ataque) + 1;
-        return tira_Dado;
+    public void recibirDano(int cantidad) {
+        this.vidaActual -= cantidad;
+        if(this.vidaActual < 0) {
+            this.vidaActual = 0;
+        }
     }
 }

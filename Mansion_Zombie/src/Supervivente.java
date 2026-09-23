@@ -1,180 +1,95 @@
 import java.util.*;
 public class Supervivente {
-    public static void main(String[] args) {
-        Supervivente s = new Supervivente();
-        System.out.println(">El superviviente ataca con valor " + s.numero_Atque());
-    }
-    private int vida_Actual;
-    private int vida_Maxima;
-    private int puntos_Ataque;
-    private boolean tiene_Botiquin;
-    private int cantidad_Armas;
-    private int cantidad_Protecciones;
+
+    private int vidaActual;
+    private int vidaMaxima;
+    private int puntosAtaque;
+    private boolean tieneBotiquin;
+    private int cantidadArmas;
+    private int cantidadProtecciones;
 
     public Supervivente() {
-        this.vida_Actual = 20;
-        this.vida_Maxima = 20;
-        this.puntos_Ataque = 4;
-        this.tiene_Botiquin = false;
-        this.cantidad_Armas = 0;
-        this.cantidad_Protecciones = 0;
+        this.vidaActual = 20;
+        this.vidaMaxima = 20;
+        this.puntosAtaque = 4;
+        this.tieneBotiquin = false;
+        this.cantidadArmas = 0;
+        this.cantidadProtecciones = 0;
     }
 
     public int getVida_Actual() {
-        return vida_Actual;
+        return vidaActual;
     }
 
     public int getVida_Maxima() {
-        return vida_Maxima;
+        return vidaMaxima;
     }
 
     public int getPuntos_Ataque() {
-        return puntos_Ataque;
+        return puntosAtaque;
     }
 
     public boolean isTiene_Botiquin() {
-        return tiene_Botiquin;
+        return tieneBotiquin;
     }
 
     public int getCantidad_Armas() {
-        return cantidad_Armas;
+        return cantidadArmas;
     }
 
     public int getCantidad_Protecciones() {
-        return cantidad_Protecciones;
+        return cantidadProtecciones;
     }
 
     public void setVida_Actual(int vida_Actual) {
-        this.vida_Actual = vida_Actual;
+        this.vidaActual = vida_Actual;
     }
 
     public void setVida_Maxima(int vida_Maxima) {
-        this.vida_Maxima = vida_Maxima;
+        this.vidaMaxima = vida_Maxima;
     }
 
     public void setPuntos_Ataque(int puntos_Ataque) {
-        this.puntos_Ataque = puntos_Ataque;
+        this.puntosAtaque = puntos_Ataque;
     }
 
     public void setTiene_Botiquin(boolean tiene_Botiquin) {
-        this.tiene_Botiquin = tiene_Botiquin;
+        this.tieneBotiquin = tiene_Botiquin;
     }
 
     public void setCantidad_Armas(int cantidad_Armas) {
-        this.cantidad_Armas = cantidad_Armas;
+        this.cantidadArmas = cantidad_Armas;
     }
 
     public void setCantidad_Protecciones(int cantidad_Protecciones) {
-        this.cantidad_Protecciones = cantidad_Protecciones;
+        this.cantidadProtecciones = cantidad_Protecciones;
     }
 
-    public int numero_Atque() {
-        int tira_Dado = (int)(Math.random() * this.puntos_Ataque) + 1;
-        return tira_Dado;
+    public int atacar() {
+        int tiradaDado = Dado.lanzar(puntosAtaque);
+        return tiradaDado + cantidadArmas; // Las armas suman + 1 por arma al resultado
     }
 
-    public void Botiquin() {
-        Scanner sc = new Scanner(System.in);
-        int opcion_botiquin = 0;
-
-        if(tiene_Botiquin) {
-            System.out.println("¿QUIERES USAR EL BOTIQUIN?");
-            System.out.println("1. QUIERO USARLO ");
-            System.out.println("2. NO QUIERO USARLO ");
-            System.out.println("OPCION: ");
-
-            if(sc.hasNextInt()) {
-                opcion_botiquin = sc.nextInt();
-            } else {
-                sc.next();
-            }
-
-            if(opcion_botiquin == 1) {
-                vida_Actual = vida_Actual + 4;
-                if(vida_Actual > 20) {
-                    vida_Actual = 20;
-                }
-                tiene_Botiquin = false;
-                System.out.println("TE HAS CURADO CON EL BOTIQUIN. LA VIDA ACTUAL ES: " + vida_Actual);
-            } else {
-                System.out.println("HAS DECIDIDO NO USAR EL BOTIQUIN");
-            }
-        } else {
-            System.out.println("NO TIENES BOTIQUINES PARA USAR ");
+    public void recibirDano(int danoBase) {
+        int danoReal = danoBase - cantidadProtecciones; // Cada protección reduce 1 de daño
+        if (danoReal < 0) { //Si daño es menor q cero pues nada
+            danoReal = 0;
+        }
+        this.vidaActual -= danoReal; //Vida menos el daño
+        if (this.vidaActual < 0) {
+            this.vidaActual = 0;
         }
     }
 
-    public void Armas() {
-        Scanner sc = new Scanner(System.in);
-        int opcion_armas = 0;
-        int cant_armas;
-
-        if(cantidad_Armas > 0) {
-            System.out.println("¿QUIERES USAR LAS ARMAS?");
-            System.out.println("1. QUIERO USARLO ");
-            System.out.println("2. NO QUIERO USARLO ");
-            System.out.println("OPCION: ");
-
-            if(sc.hasNextInt()) {
-                opcion_armas = sc.nextInt();
-            } else {
-                sc.next();
+    public boolean curar() {
+        if (tieneBotiquin) {
+            vidaActual += 4;
+            if (vidaActual > vidaMaxima) {
+                vidaActual = vidaMaxima;
             }
-
-            if(opcion_armas == 1) {
-                System.out.println("¿CUANTAS ARMAS QUIERES USAR?");
-                cant_armas = sc.nextInt();
-
-                if(cant_armas > cantidad_Armas) {
-                    System.out.println("ERROR:TIENES MENOS ARMAS");
-                } else {
-                    cantidad_Armas = cantidad_Armas - cant_armas;
-                    System.out.println("TE HAS REFORZADO CON LAS ARMAS. LOS PUNTOS DE ATAQUE SON: " + puntos_Ataque);
-                }
-            } else {
-                System.out.println("HAS DECIDIDO NO USAR LAS ARMAS");
-            }
-        } else {
-            System.out.println("NO TIENES ARMAS PARA USAR");
+            tieneBotiquin = false;
+            return true;
         }
-    }
-
-    public void Protecciones() {
-        Scanner sc = new Scanner(System.in);
-        int opcion_protecciones = 0;
-        int cant_protecciones;
-
-        if(cantidad_Protecciones > 0) {
-            System.out.println("¿QUIERES USAR LAS PROTECCIONES?");
-            System.out.println("1. QUIERO USARLO");
-            System.out.println("2. NO QUIERO USARLO");
-            System.out.println("OPCION: ");
-
-            if(sc.hasNextInt()) {
-                opcion_protecciones = sc.nextInt();
-            } else {
-                sc.next();
-            }
-
-            if(opcion_protecciones == 1) {
-                System.out.println("¿CUANTAS PROTECCIONES QUIERES USAR?");
-                cant_protecciones = sc.nextInt();
-
-                if(cant_protecciones > cantidad_Protecciones) {
-                    System.out.println("ERROR: TIENES MENOS PROTECCIONES");
-                } else {
-                    vida_Actual = vida_Actual + 1;
-                    if(vida_Actual > 20) {
-                        vida_Actual = 20;
-                    }
-                    cantidad_Protecciones = cantidad_Protecciones - cant_protecciones;
-                    System.out.println("TE HAS CURADO CON LAS PROTECCIONES. LA VIDA ACTUAL ES: " + vida_Actual);
-                }
-            } else {
-                System.out.println("HAS DECIDIDO NO USAR LAS PROTECCIONES");
-            }
-        } else {
-            System.out.println("NO TIENES PROTECCIONES PARA USAR");
-        }
+        return false;
     }
 }
