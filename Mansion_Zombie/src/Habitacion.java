@@ -4,7 +4,7 @@ public class Habitacion {
     private int intentosBusqueda;
 
     public Habitacion(int i) {
-        this.numeroHabitacion = numeroHabitacion;
+        this.numeroHabitacion = i; // CORREGIDO: antes ponía numeroHabitacion = numeroHabitacion y fallaba
         this.ZombiesActivos = 1;
         this.intentosBusqueda = 3;
     }
